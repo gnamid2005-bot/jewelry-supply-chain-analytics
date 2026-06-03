@@ -216,3 +216,53 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data safety
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/anonymized/
+!data/processed/anonymized/**
+!data/processed/*anonymized*
+!data/processed/*anonymous*
+!data/processed/*sanitized*
+!data/processed/*sample*
+
+# Excel files can contain real company or internship data
+*.xlsx
+*.xls
+*.xlsm
+
+# Secrets and credentials
+.env
+.env.*
+secrets.toml
+*api_key*
+*apikey*
+*credential*
+*credentials*
+*.pem
+*.key
+*.p12
+*.pfx
+service-account*.json
+service_account*.json
+google-credentials*.json
+google_credentials*.json
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
