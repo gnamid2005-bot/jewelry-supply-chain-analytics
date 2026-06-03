@@ -65,27 +65,27 @@ Local rule-based AI Insight Assistant
 
 ## Dashboard Pages
 
-Planned Streamlit pages:
+The Streamlit dashboard reads only `data/sample/anonymized_supply_chain_sample.csv`.
 
-- Executive Overview: KPI cards, monthly order and delivery trends, fulfillment rate, delivery gap.
-- SKU Analysis: active SKU count, SKU contribution, SKU source mix, product-level drilldowns.
-- Factory Performance: factory contribution, fulfillment comparison, in-house vs external share.
-- Product Series: product series contribution, labor value mix, average labor value per unit.
-- Supplier Concentration: supplier top 5 share, HHI, concentration trend, risk flags.
-- AI Insight Assistant: local narrative insights generated from selected filters and KPI rules.
+- Supply Chain Overview: KPI cards, monthly order vs delivery trend, delivery labor value trend, fulfillment rate trend.
+- Supplier Performance: factory type comparison, top factories, factory contribution share, supplier top 5 share, supplier HHI, sortable supplier table.
+- Product Mix: product category contribution, product series contribution, SKU source distribution, average labor value per unit by category.
+- SKU Drilldown: searchable SKU selection, monthly order/delivery/labor value trend, related factory and product attributes.
+- AI Insight Assistant: local narrative insights generated from selected chart data and rule-based anomaly flags.
 
 ## AI Insight Assistant
 
-The first version will be mock/local and rule-based. It will not call paid APIs.
+The current version is mock/local and rule-based. It does not call the OpenAI API, local LLMs, paid APIs, raw data, or processed private data.
 
-Planned behavior:
+Current behavior:
 
 - Read dashboard filter context and KPI outputs.
 - Detect trend changes, delivery gaps, concentration risks, and high-contribution categories.
 - Generate short business-readable insight bullets.
 - Provide simple next-step prompts such as "review top gap factories" or "compare product series mix".
+- Display a future LLM prompt template for portfolio storytelling.
 
-Future versions may add optional LLM support, but only with local environment variables and never with committed API keys.
+Future versions may add optional OpenAI API or local LLM support, but only with local environment variables and never with committed API keys.
 
 ## Data Privacy Notice
 
@@ -181,4 +181,4 @@ Run the future Streamlit app:
 streamlit run dashboard/streamlit_app.py
 ```
 
-The dashboard entry point is planned but not implemented yet.
+The dashboard uses only the anonymized sample CSV. If the sample file is missing, the app will show setup instructions instead of reading private folders.
