@@ -141,6 +141,8 @@ See [docs/privacy_notice.md](docs/privacy_notice.md) for the detailed policy.
 
 ## How to Run
 
+Place your private Excel file locally under `data/raw/`. Do not commit raw Excel files.
+
 Create a virtual environment:
 
 ```bash
@@ -154,6 +156,25 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Clean the private Excel file into a local parquet file:
+
+```bash
+python -m src.clean --input data/raw/your_file.xlsx
+```
+
+Create an anonymized public sample CSV:
+
+```bash
+python -m src.anonymize --max-rows 10000 --scale-factor 1.0
+```
+
+Commit only privacy-safe public data and code. In practice:
+
+- Commit `data/sample/anonymized_supply_chain_sample.csv` after reviewing it.
+- Do not commit files under `data/raw/`.
+- Do not commit full processed private data such as `data/processed/supply_chain_cleaned.parquet`.
+- Do not commit `.env`, API keys, credentials, or original Excel files.
+
 Run the future Streamlit app:
 
 ```bash
@@ -161,4 +182,3 @@ streamlit run dashboard/streamlit_app.py
 ```
 
 The dashboard entry point is planned but not implemented yet.
-
