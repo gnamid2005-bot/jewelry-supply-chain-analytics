@@ -1,0 +1,12 @@
+pandas
+numpy
+openpyxl
+duckdb
+pyarrow
+streamlit
+plotly
+python-dotenv
+jupyter
+ipykernel
+pytest
+ruff
