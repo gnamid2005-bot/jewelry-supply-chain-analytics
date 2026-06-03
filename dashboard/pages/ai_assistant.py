@@ -66,7 +66,7 @@ def _render_chart(title: str, chart_key: str, chart_data: pd.DataFrame) -> None:
     else:
         fig = px.bar(chart_data.head(15), x="product_series", y="share", title=title)
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render(df: pd.DataFrame) -> None:
@@ -120,4 +120,3 @@ def render(df: pd.DataFrame) -> None:
             ),
             language="text",
         )
-

@@ -41,7 +41,7 @@ def render(df: pd.DataFrame) -> None:
                 y="monthly_delivery_labor_value",
                 title="Factory Type Comparison",
             ),
-            use_container_width=True,
+            width="stretch",
         )
 
     with right:
@@ -53,7 +53,7 @@ def render(df: pd.DataFrame) -> None:
                 y="monthly_delivery_labor_value",
                 title="Top 10 Factories by Delivery Labor Value",
             ),
-            use_container_width=True,
+            width="stretch",
         )
 
     contribution = metrics.factory_contribution(df)
@@ -64,7 +64,7 @@ def render(df: pd.DataFrame) -> None:
             values="monthly_delivery_labor_value",
             title="Factory Contribution Share",
         ),
-        use_container_width=True,
+        width="stretch",
     )
 
     supplier_table = contribution.copy()
@@ -83,5 +83,4 @@ def render(df: pd.DataFrame) -> None:
         ).fillna(0)
 
     st.subheader("Sortable Supplier Table")
-    st.dataframe(supplier_table, use_container_width=True)
-
+    st.dataframe(supplier_table, width="stretch")

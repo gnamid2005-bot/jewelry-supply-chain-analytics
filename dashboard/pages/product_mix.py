@@ -43,7 +43,7 @@ def render(df: pd.DataFrame) -> None:
                 y="monthly_delivery_labor_value",
                 title="Product Category Contribution",
             ),
-            use_container_width=True,
+            width="stretch",
         )
 
     with right:
@@ -55,7 +55,7 @@ def render(df: pd.DataFrame) -> None:
                 values="monthly_delivery_labor_value",
                 title="Product Series Contribution",
             ),
-            use_container_width=True,
+            width="stretch",
         )
 
     left, right = st.columns(2)
@@ -69,7 +69,7 @@ def render(df: pd.DataFrame) -> None:
                     values="sku_count",
                     title="SKU Source Distribution",
                 ),
-                use_container_width=True,
+                width="stretch",
             )
 
     with right:
@@ -81,6 +81,5 @@ def render(df: pd.DataFrame) -> None:
                 y="avg_labor_value_per_unit",
                 title="Average Labor Value per Unit by Category",
             ),
-            use_container_width=True,
+            width="stretch",
         )
-

@@ -52,7 +52,7 @@ def render(df: pd.DataFrame) -> None:
             markers=True,
             title="Monthly Order vs Delivery Quantity Trend",
         ),
-        use_container_width=True,
+        width="stretch",
     )
 
     left, right = st.columns(2)
@@ -65,7 +65,7 @@ def render(df: pd.DataFrame) -> None:
                 markers=True,
                 title="Monthly Delivery Labor Value Trend",
             ),
-            use_container_width=True,
+            width="stretch",
         )
 
     with right:
@@ -77,6 +77,5 @@ def render(df: pd.DataFrame) -> None:
                 markers=True,
                 title="Monthly Fulfillment Rate Trend",
             ),
-            use_container_width=True,
+            width="stretch",
         )
-

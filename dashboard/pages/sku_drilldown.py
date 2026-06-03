@@ -41,7 +41,7 @@ def render(df: pd.DataFrame) -> None:
         for column in detail_columns
         if column in sku_df.columns
     }
-    st.dataframe(pd.DataFrame([details]), use_container_width=True)
+    st.dataframe(pd.DataFrame([details]), width="stretch")
 
     monthly = _sku_monthly_summary(sku_df)
     if monthly.empty:
@@ -71,6 +71,5 @@ def render(df: pd.DataFrame) -> None:
             markers=True,
             title="Monthly Order, Delivery, and Labor Value Trend",
         ),
-        use_container_width=True,
+        width="stretch",
     )
-
