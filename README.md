@@ -1,5 +1,20 @@
 # Jewelry Supply Chain Analytics with AI Insight Assistant
 
+## Demo
+
+- Live Streamlit Dashboard: [jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app](https://jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app)
+- GitHub repository: public portfolio project for jewelry supply chain analytics, privacy-safe data processing, KPI reporting, and a Streamlit dashboard.
+- Current demo data: anonymized sample data only.
+- AI Insight Assistant: mock/local rule-based version, with no paid API calls.
+- Raw company data is never uploaded to GitHub or Streamlit Cloud.
+
+## Project Status
+
+- Data pipeline completed.
+- Anonymized sample data generated.
+- Streamlit dashboard deployed.
+- Tableau Public dashboard planned as next milestone.
+
 An end-to-end supply chain analytics portfolio project for jewelry manufacturing and retail operations. The project will combine Python data processing, DuckDB analytics, an interactive Streamlit dashboard, Plotly visualizations, and a local rule-based AI insight assistant.
 
 This public repository is intentionally built with anonymized sample data only. Raw company, internship, supplier, SKU, factory, and Excel files must never be committed.
