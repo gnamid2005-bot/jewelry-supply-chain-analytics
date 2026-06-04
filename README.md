@@ -134,7 +134,11 @@ This repository is safe for public GitHub use only when it contains anonymized s
 
 - Raw Excel files are not uploaded.
 - Factory names are anonymized as `Factory_001`, `Factory_002`, and so on.
+- Factory type values are generalized as `In-house`, `External`, `Partner`, `Unknown`, or `Other`.
 - SKU identifiers are anonymized as `SKU_000001`, `SKU_000002`, and so on.
+- Product categories are generalized into public English categories.
+- Product series values are anonymized as `Series_001`, `Series_002`, and so on.
+- SKU source values are generalized as `Internal Design`, `External Purchase`, `Customer Order`, `Unknown`, or `Other`.
 - `image_path` values are removed from public data.
 - Labor value metrics can be scaled by a consistent ratio.
 - Public demos use anonymized sample data only.

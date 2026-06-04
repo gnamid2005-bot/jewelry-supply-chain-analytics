@@ -14,12 +14,111 @@ from src.config import DEFAULT_ANONYMIZED_SAMPLE_CSV, DEFAULT_CLEANED_PARQUET, P
 
 SENSITIVE_COLUMNS = ["image_path", "product_description"]
 SCALABLE_COLUMNS = ["labor_unit_price", "monthly_delivery_labor_value"]
+SKU_SOURCE_CATEGORIES = {
+    "internal_design": "Internal Design",
+    "external_purchase": "External Purchase",
+    "customer_order": "Customer Order",
+    "unknown": "Unknown",
+    "other": "Other",
+}
+UNKNOWN_VALUES = {
+    "",
+    "-",
+    "null",
+    "none",
+    "nan",
+    "na",
+    "n/a",
+    "unknown",
+    "無",
+    "无",
+    "不適用",
+    "不适用",
+}
 
 
 def _build_mapping(values: pd.Series, prefix: str, width: int) -> dict[Any, str]:
     """Build a stable anonymization mapping for non-null values."""
     unique_values = sorted(values.dropna().astype(str).unique())
     return {value: f"{prefix}_{index:0{width}d}" for index, value in enumerate(unique_values, start=1)}
+
+
+def _normalized_text(value: object) -> str:
+    """Normalize text values for public-category keyword matching."""
+    if pd.isna(value):
+        return ""
+    return str(value).strip().lower()
+
+
+def _is_unknown_public_value(normalized: str) -> bool:
+    """Return whether a normalized value should become Unknown in public data."""
+    return normalized in UNKNOWN_VALUES
+
+
+def generalize_factory_type(value: object) -> str:
+    """Generalize factory type into privacy-safe public categories."""
+    normalized = _normalized_text(value)
+    if _is_unknown_public_value(normalized):
+        return "Unknown"
+
+    in_house_keywords = ["自营", "自營", "自廠", "自厂", "internal", "in-house"]
+    if any(keyword in normalized for keyword in in_house_keywords):
+        return "In-house"
+
+    external_keywords = ["外部", "外館", "外馆", "supplier", "external", "outsource"]
+    if any(keyword in normalized for keyword in external_keywords):
+        return "External"
+
+    partner_keywords = ["合作", "partner"]
+    if any(keyword in normalized for keyword in partner_keywords):
+        return "Partner"
+
+    return "Other"
+
+
+def generalize_product_category(value: object) -> str:
+    """Generalize product category into privacy-safe public categories."""
+    normalized = _normalized_text(value)
+    if _is_unknown_public_value(normalized):
+        return "Unknown"
+
+    if any(keyword in normalized for keyword in ["鑲嵌", "镶嵌"]):
+        return "Gem-set Jewelry"
+
+    if any(keyword in normalized for keyword in ["鉑金", "铂金", "k金"]):
+        return "K-Gold & Platinum"
+
+    if any(keyword in normalized for keyword in ["定價", "定价"]):
+        return "Fixed-price Gold"
+
+    if any(keyword in normalized for keyword in ["黃金", "黄金"]):
+        return "Gold Jewelry"
+
+    if any(keyword in normalized for keyword in ["其他", "other"]):
+        return "Other"
+
+    return "Other"
+
+
+def generalize_sku_source(value: object) -> str:
+    """Generalize SKU source into privacy-safe public categories."""
+    normalized = _normalized_text(value)
+    if _is_unknown_public_value(normalized):
+        return SKU_SOURCE_CATEGORIES["unknown"]
+
+    internal_keywords = ["internal", "in-house", "自研", "自主", "内部", "內部", "设计", "設計"]
+    if any(keyword in normalized for keyword in internal_keywords):
+        return SKU_SOURCE_CATEGORIES["internal_design"]
+
+    external_keywords = ["external", "purchase", "supplier", "外购", "外購", "采购", "採購", "购买"]
+    if any(keyword in normalized for keyword in external_keywords):
+        return SKU_SOURCE_CATEGORIES["external_purchase"]
+
+    customer_keywords = ["customer", "custom", "bespoke", "客户", "客戶", "客订", "客訂", "订单", "訂單"]
+    if any(keyword in normalized for keyword in customer_keywords):
+        return SKU_SOURCE_CATEGORIES["customer_order"]
+
+    return SKU_SOURCE_CATEGORIES["other"]
 
 
 def anonymize_supply_chain_data(
@@ -30,6 +129,8 @@ def anonymize_supply_chain_data(
     """Return an anonymized sample dataframe safe for public demos."""
     if max_rows <= 0:
         raise ValueError("max_rows must be greater than 0")
+    if scale_factor <= 0:
+        raise ValueError("scale_factor must be greater than 0")
 
     anonymized = df.head(max_rows).copy()
 
@@ -40,6 +141,19 @@ def anonymize_supply_chain_data(
     if "sku_id" in anonymized.columns:
         sku_mapping = _build_mapping(anonymized["sku_id"], "SKU", 6)
         anonymized["sku_id"] = anonymized["sku_id"].astype("string").map(sku_mapping)
+
+    if "product_series" in anonymized.columns:
+        series_mapping = _build_mapping(anonymized["product_series"], "Series", 3)
+        anonymized["product_series"] = anonymized["product_series"].astype("string").map(series_mapping)
+
+    if "factory_type" in anonymized.columns:
+        anonymized["factory_type"] = anonymized["factory_type"].apply(generalize_factory_type)
+
+    if "product_category" in anonymized.columns:
+        anonymized["product_category"] = anonymized["product_category"].apply(generalize_product_category)
+
+    if "sku_source" in anonymized.columns:
+        anonymized["sku_source"] = anonymized["sku_source"].apply(generalize_sku_source)
 
     for column in SCALABLE_COLUMNS:
         if column in anonymized.columns:
@@ -119,4 +233,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
