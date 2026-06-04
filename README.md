@@ -88,6 +88,32 @@ The Streamlit dashboard reads only `data/sample/anonymized_supply_chain_sample.c
 - SKU Drilldown: searchable SKU selection, monthly order/delivery/labor value trend, related factory and product attributes.
 - AI Insight Assistant: local narrative insights generated from selected chart data and rule-based anomaly flags.
 
+## Dashboard Preview
+
+The deployed Streamlit dashboard uses anonymized sample data only. No raw company data is included.
+
+### Executive Overview
+
+![Executive Overview](assets/overview_dashboard.png)
+
+### Supplier Performance
+
+![Supplier Performance](assets/supplier_performance.png)
+
+### Product Mix
+
+![Product Mix](assets/product_mix.png)
+
+### SKU Drill-down
+
+![SKU Drill-down](assets/sku_drilldown.png)
+
+### AI Insight Assistant
+
+![AI Insight Assistant](assets/ai_insight_assistant.png)
+
+The AI Insight Assistant is currently implemented as a mock/local rule-based module and does not call any paid API.
+
 ## AI Insight Assistant
 
 The current version is mock/local and rule-based. It does not call the OpenAI API, local LLMs, paid APIs, raw data, or processed private data.
