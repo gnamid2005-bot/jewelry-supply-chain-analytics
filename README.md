@@ -17,7 +17,7 @@
 
 An end-to-end supply chain analytics portfolio project for jewelry manufacturing and retail operations. The project will combine Python data processing, DuckDB analytics, an interactive Streamlit dashboard, Plotly visualizations, and a local rule-based AI insight assistant.
 
-This public repository is intentionally built with anonymized sample data only. Raw company, internship, supplier, SKU, factory, and Excel files must never be committed.
+This public repository is intentionally built with anonymized sample data only. Raw company, internship, supplier, SKU, factory, and Excel files must never be committed. The public repository and live demo use anonymized sample data only. No proprietary company data, raw Excel files, real supplier names, real SKU identifiers, or confidential business information are included.
 
 ## Project Overview
 
