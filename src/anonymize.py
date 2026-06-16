@@ -12,7 +12,7 @@ import pandas as pd
 from src.config import DEFAULT_ANONYMIZED_SAMPLE_CSV, DEFAULT_CLEANED_PARQUET, PROJECT_ROOT
 
 
-SENSITIVE_COLUMNS = ["image_path", "product_description"]
+SENSITIVE_COLUMNS = ["image_path", "product_description", "序号"]
 SCALABLE_COLUMNS = ["labor_unit_price", "monthly_delivery_labor_value"]
 SKU_SOURCE_CATEGORIES = {
     "internal_design": "Internal Design",

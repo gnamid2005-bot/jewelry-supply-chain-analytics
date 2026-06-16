@@ -1,89 +1,71 @@
 # Jewelry Supply Chain Analytics with AI Insight Assistant
 
-## Demo
+Independent student portfolio project inspired by internship experience in jewelry supply chain analytics. The public repository and live demo use anonymized and generalized sample data only; this is not a company production system.
+
+## Live Demo
 
 - Live Streamlit Dashboard: [jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app](https://jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app)
-- GitHub repository: public portfolio project for jewelry supply chain analytics, privacy-safe data processing, KPI reporting, and a Streamlit dashboard.
-- Current demo data: anonymized sample data only.
-- AI Insight Assistant: mock/local rule-based version, with no paid API calls.
+- GitHub repository: privacy-safe portfolio project for data cleaning, KPI analysis, Streamlit dashboarding, and local rule-based insight generation.
+- Demo data: `data/sample/anonymized_supply_chain_sample.csv`.
 - Raw company data is never uploaded to GitHub or Streamlit Cloud.
+- AI Insight Assistant is currently a mock/local rule-based module and does not call paid APIs.
 
 ## Project Status
 
-- Data pipeline completed.
-- Anonymized sample data generated.
-- Streamlit dashboard deployed.
-- Tableau Public dashboard planned as next milestone.
-
-An end-to-end supply chain analytics portfolio project for jewelry manufacturing and retail operations. The project will combine Python data processing, DuckDB analytics, an interactive Streamlit dashboard, Plotly visualizations, and a local rule-based AI insight assistant.
-
-This public repository is intentionally built with anonymized sample data only. Raw company, internship, supplier, SKU, factory, and Excel files must never be committed. The public repository and live demo use anonymized sample data only. No proprietary company data, raw Excel files, real supplier names, real SKU identifiers, or confidential business information are included.
+- Data cleaning and anonymization pipeline completed.
+- Anonymized/generalized sample data generated for public demo use.
+- Streamlit dashboard deployed on Streamlit Cloud.
+- Tableau Public dashboard planned as the next portfolio milestone.
 
 ## Project Overview
 
-The project analyzes monthly jewelry supply chain performance across SKU, factory type, factory, product category, product series, SKU source, order quantity, delivery quantity, and delivery labor value.
+This project analyzes monthly jewelry supply chain performance across anonymized SKU, factory, factory type, product category, product series, SKU source, order quantity, delivery quantity, and delivery labor value.
 
-The goal is to turn operational data into a portfolio-ready analytics product that answers questions such as:
+The goal is to demonstrate an end-to-end analytics workflow:
 
-- Which product series drive the most delivery volume and labor value?
-- How does fulfillment performance change by month?
-- Which factories contribute the largest share of delivery?
-- How concentrated is supplier dependency?
-- How does in-house production compare with external sourcing?
-- What insights can be generated automatically from dashboard filters?
+- ingest private Excel files locally,
+- clean and standardize operational fields,
+- create a privacy-safe public sample dataset,
+- calculate supply chain KPIs,
+- build an interactive Streamlit dashboard,
+- generate local rule-based business insights.
 
 ## Business Context
 
-Jewelry supply chains often involve high SKU complexity, mixed internal and external factory capacity, product series seasonality, and changing fulfillment pressure. A useful analytics workflow should connect operational metrics with business decisions:
+Jewelry manufacturing and retail supply chains often involve high SKU complexity, mixed in-house and external capacity, seasonal product series, and fulfillment pressure across factories. A practical analytics workflow should help answer:
 
-- Monthly planning and delivery tracking
-- SKU and product series portfolio review
-- Factory contribution and sourcing mix analysis
-- Supplier concentration risk monitoring
-- Executive reporting with simple, repeatable KPI definitions
+- Which product categories and series contribute the most delivery value?
+- How do monthly order and delivery quantities compare?
+- Which factories contribute the largest share of delivery labor value?
+- How concentrated is supplier dependency?
+- How does in-house production compare with external sourcing?
+- Which trends or anomalies deserve follow-up analysis?
 
-## Tech Stack
+## KPI Framework
 
-- Python for data processing and automation
-- pandas and NumPy for tabular analytics
-- DuckDB and PyArrow for local analytical storage
-- openpyxl for local Excel ingestion when private files are available
-- Streamlit for the public dashboard
-- Plotly for interactive charts
-- python-dotenv for local configuration only
-- Jupyter and ipykernel for exploratory notebooks
-- pytest for tests
-- Ruff for linting
+Core KPI definitions are documented in [docs/kpi_definitions.md](docs/kpi_definitions.md). The dashboard currently focuses on:
 
-No paid APIs are required for the zero-budget version.
+- Total Order Quantity
+- Total Delivery Quantity
+- Delivery Labor Value
+- Fulfillment Rate
+- Delivery Gap
+- Active SKU Count
+- Factory Contribution Share
+- In-house vs External Share
+- Product Category and Product Series Contribution
+- Average Labor Value per Unit
+- Supplier Top 5 Share
+- Supplier HHI
 
-## Project Architecture
-
-```text
-Raw private Excel files
-        |
-        v
-Local ingestion and cleaning scripts
-        |
-        v
-Anonymized sample data and processed analytical tables
-        |
-        v
-DuckDB / Parquet analytical layer
-        |
-        v
-Streamlit dashboard + Plotly visualizations
-        |
-        v
-Local rule-based AI Insight Assistant
-```
+These KPIs are calculated from anonymized sample data in the public dashboard and from local private data only during private development.
 
 ## Dashboard Pages
 
-The Streamlit dashboard reads only `data/sample/anonymized_supply_chain_sample.csv`.
+The Streamlit app reads only `data/sample/anonymized_supply_chain_sample.csv`.
 
 - Supply Chain Overview: KPI cards, monthly order vs delivery trend, delivery labor value trend, fulfillment rate trend.
-- Supplier Performance: factory type comparison, top factories, factory contribution share, supplier top 5 share, supplier HHI, sortable supplier table.
+- Supplier Performance: factory type comparison, top factories, contribution share, supplier top 5 share, HHI, sortable supplier table.
 - Product Mix: product category contribution, product series contribution, SKU source distribution, average labor value per unit by category.
 - SKU Drilldown: searchable SKU selection, monthly order/delivery/labor value trend, related factory and product attributes.
 - AI Insight Assistant: local narrative insights generated from selected chart data and rule-based anomaly flags.
@@ -116,35 +98,49 @@ The AI Insight Assistant is currently implemented as a mock/local rule-based mod
 
 ## AI Insight Assistant
 
-The current version is mock/local and rule-based. It does not call the OpenAI API, local LLMs, paid APIs, raw data, or processed private data.
+The AI Insight Assistant is designed as a zero-budget portfolio feature. It does not call OpenAI, local LLMs, paid APIs, raw data, or processed private data.
 
 Current behavior:
 
-- Read dashboard filter context and KPI outputs.
-- Detect trend changes, delivery gaps, concentration risks, and high-contribution categories.
-- Generate short business-readable insight bullets.
-- Provide simple next-step prompts such as "review top gap factories" or "compare product series mix".
-- Display a future LLM prompt template for portfolio storytelling.
+- reads selected dashboard context and aggregated chart data,
+- runs local anomaly rules for fulfillment rate, labor value changes, and supplier concentration,
+- returns structured insight sections: main trend, anomalies, possible business meaning, follow-up dimensions, and executive summary,
+- displays a future LLM prompt template without sending data anywhere.
 
-Future versions may add optional OpenAI API or local LLM support, but only with local environment variables and never with committed API keys.
+Future versions may optionally support OpenAI API or local LLM integration, but only through local environment variables and never with committed API keys.
 
 ## Data Privacy Notice
 
-This repository is safe for public GitHub use only when it contains anonymized sample data.
+This repository is safe for public GitHub and Streamlit Cloud use only because it contains anonymized/generalized sample data.
 
 - Raw Excel files are not uploaded.
+- Full processed private parquet files are not uploaded.
 - Factory names are anonymized as `Factory_001`, `Factory_002`, and so on.
 - Factory type values are generalized as `In-house`, `External`, `Partner`, `Unknown`, or `Other`.
 - SKU identifiers are anonymized as `SKU_000001`, `SKU_000002`, and so on.
 - Product categories are generalized into public English categories.
 - Product series values are anonymized as `Series_001`, `Series_002`, and so on.
 - SKU source values are generalized as `Internal Design`, `External Purchase`, `Customer Order`, `Unknown`, or `Other`.
-- `image_path` values are removed from public data.
-- Labor value metrics can be scaled by a consistent ratio.
-- Public demos use anonymized sample data only.
+- `image_path` and `product_description` are excluded from public sample data.
+- Labor value metrics may be scaled by a consistent ratio.
 - API keys, credentials, `.env`, and `.env.*` files are ignored and must not be committed.
 
 See [docs/privacy_notice.md](docs/privacy_notice.md) for the detailed policy.
+
+## Tech Stack
+
+- Python for data processing and automation
+- pandas and NumPy for tabular analytics
+- DuckDB and PyArrow for local analytical storage
+- openpyxl for local Excel ingestion
+- Streamlit for the dashboard
+- Plotly for interactive charts
+- python-dotenv for local-only configuration
+- Jupyter and ipykernel for exploratory notebooks
+- pytest for tests
+- Ruff for linting
+
+No paid API dependency is required for the current version.
 
 ## Project Structure
 
@@ -165,28 +161,16 @@ See [docs/privacy_notice.md](docs/privacy_notice.md) for the detailed policy.
 ├── docs/
 │   ├── data_dictionary.md
 │   ├── kpi_definitions.md
-│   └── privacy_notice.md
+│   ├── privacy_notice.md
+│   └── workflow.md
 ├── notebooks/
 ├── src/
-└── tableau/
-    └── screenshots/
+├── tableau/
+│   └── screenshots/
+└── tests/
 ```
 
-## Roadmap
-
-- Initialize repository safety rules and public project skeleton.
-- Add anonymized sample data generator.
-- Build reusable data cleaning and validation modules.
-- Create DuckDB and Parquet analytical tables.
-- Build Streamlit dashboard pages.
-- Add local rule-based AI insight assistant.
-- Add tests for KPI formulas and anonymization logic.
-- Add Tableau screenshots or mockups for portfolio storytelling.
-- Write a final case study with business insights and privacy-safe screenshots.
-
-## How to Run
-
-Place your private Excel file locally under `data/raw/`. Do not commit raw Excel files.
+## How to Run Locally
 
 Create a virtual environment:
 
@@ -201,29 +185,32 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Clean the private Excel file into a local parquet file:
+For private local development only, place the raw Excel file under `data/raw/`. Do not commit raw Excel files.
+
+Clean the local Excel file into a local-only parquet file:
 
 ```bash
 python -m src.clean --input data/raw/your_file.xlsx
 ```
 
-Create an anonymized public sample CSV:
+Create the anonymized public sample CSV:
 
 ```bash
 python -m src.anonymize --max-rows 10000 --scale-factor 1.0
 ```
 
-Commit only privacy-safe public data and code. In practice:
-
-- Commit `data/sample/anonymized_supply_chain_sample.csv` after reviewing it.
-- Do not commit files under `data/raw/`.
-- Do not commit full processed private data such as `data/processed/supply_chain_cleaned.parquet`.
-- Do not commit `.env`, API keys, credentials, or original Excel files.
-
-Run the future Streamlit app:
+Run the Streamlit app:
 
 ```bash
 streamlit run dashboard/streamlit_app.py
 ```
 
-The dashboard uses only the anonymized sample CSV. If the sample file is missing, the app will show setup instructions instead of reading private folders.
+Commit only privacy-safe code, docs, assets, and reviewed sample data. Do not commit `data/raw/`, `data/processed/`, Excel files, `.env`, API keys, credentials, raw product descriptions, or mapping tables.
+
+## Future Work
+
+- Build a Tableau Public dashboard using the same anonymized sample data.
+- Add richer anomaly detection and KPI explanations.
+- Add unit tests for anonymization rules.
+- Add optional local LLM or OpenAI integration through uncommitted environment variables.
+- Expand portfolio case-study documentation with privacy-safe screenshots and executive findings.
