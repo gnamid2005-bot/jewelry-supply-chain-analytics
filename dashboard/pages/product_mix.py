@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from dashboard.i18n import t
 from src import metrics
 
 
@@ -29,9 +30,9 @@ def _avg_labor_by_category(df: pd.DataFrame) -> pd.DataFrame:
     return grouped.sort_values("avg_labor_value_per_unit", ascending=False)
 
 
-def render(df: pd.DataFrame) -> None:
+def render(df: pd.DataFrame, lang: str = "en") -> None:
     """Render the product mix page."""
-    st.title("Product Mix")
+    st.title(t("product_mix_title", lang))
 
     left, right = st.columns(2)
     with left:
@@ -41,7 +42,7 @@ def render(df: pd.DataFrame) -> None:
                 category,
                 x="product_category",
                 y="monthly_delivery_labor_value",
-                title="Product Category Contribution",
+                title=t("product_category_contribution", lang),
             ),
             width="stretch",
         )
@@ -53,7 +54,7 @@ def render(df: pd.DataFrame) -> None:
                 series,
                 path=["product_series"],
                 values="monthly_delivery_labor_value",
-                title="Product Series Contribution",
+                title=t("product_series_contribution", lang),
             ),
             width="stretch",
         )
@@ -67,7 +68,7 @@ def render(df: pd.DataFrame) -> None:
                     sku_source,
                     names="sku_source",
                     values="sku_count",
-                    title="SKU Source Distribution",
+                    title=t("sku_source_distribution", lang),
                 ),
                 width="stretch",
             )
@@ -79,7 +80,7 @@ def render(df: pd.DataFrame) -> None:
                 avg_labor,
                 x="product_category",
                 y="avg_labor_value_per_unit",
-                title="Average Labor Value per Unit by Category",
+                title=t("avg_labor_by_category", lang),
             ),
             width="stretch",
         )

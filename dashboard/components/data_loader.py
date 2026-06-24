@@ -7,6 +7,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from dashboard.i18n import t
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SAMPLE_DATA_PATH = PROJECT_ROOT / "data" / "sample" / "anonymized_supply_chain_sample.csv"
@@ -47,10 +49,7 @@ def load_sample_data() -> pd.DataFrame:
     )
 
 
-def show_missing_sample_data_message() -> None:
+def show_missing_sample_data_message(lang: str = "en") -> None:
     """Show setup instructions when the public sample CSV is not present."""
-    st.info(
-        "No anonymized sample data found yet. Generate it locally with "
-        "`python -m src.anonymize --max-rows 10000 --scale-factor 1.0`, then rerun the app."
-    )
-    st.caption("The dashboard intentionally does not read `data/raw/` or `data/processed/`.")
+    st.info(t("missing_sample_info", lang))
+    st.caption(t("privacy_caption", lang))

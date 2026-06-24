@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from dashboard.components.data_loader import load_sample_data, show_missing_sample_data_message
+from dashboard.i18n import language_selector, option_label, t
 from dashboard.pages import ai_assistant, overview, product_mix, sku_drilldown, suppliers
 
 
@@ -33,19 +34,23 @@ def main() -> None:
         layout="wide",
     )
 
-    st.sidebar.title("Jewelry Supply Chain")
-    selected_page = st.sidebar.radio("Dashboard page", list(PAGES.keys()))
-    st.sidebar.caption("Data source: anonymized public sample CSV only.")
+    lang = language_selector()
+    st.sidebar.title(t("sidebar_title", lang))
+    selected_page = st.sidebar.radio(
+        t("dashboard_page", lang),
+        list(PAGES.keys()),
+        format_func=lambda page: option_label(page, lang),
+    )
+    st.sidebar.caption(t("data_source_caption", lang))
 
     df = load_sample_data()
     if df.empty:
-        st.title("Jewelry Supply Chain Analytics")
-        show_missing_sample_data_message()
+        st.title(t("app_title", lang))
+        show_missing_sample_data_message(lang)
         return
 
-    PAGES[selected_page](df)
+    PAGES[selected_page](df, lang)
 
 
 if __name__ == "__main__":
     main()
-

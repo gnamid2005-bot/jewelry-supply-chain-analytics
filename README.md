@@ -7,6 +7,7 @@ Independent student portfolio project inspired by internship experience in jewel
 - Live Streamlit Dashboard: [jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app](https://jewelry-supply-chain-analytics-btxw2gk2pqkzzqy7eqkapp.streamlit.app)
 - GitHub repository: privacy-safe portfolio project for data cleaning, KPI analysis, Streamlit dashboarding, and local rule-based insight generation.
 - Demo data: `data/sample/anonymized_supply_chain_sample.csv`.
+- UI languages: English, Simplified Chinese, and Traditional Chinese.
 - Raw company data is never uploaded to GitHub or Streamlit Cloud.
 - AI Insight Assistant is a local rule-based analytics module and does not call paid APIs.
 
@@ -70,6 +71,8 @@ The Streamlit app reads only `data/sample/anonymized_supply_chain_sample.csv`.
 - SKU Drilldown: searchable SKU selection, monthly order/delivery/labor value trend, related factory and product attributes.
 - AI Insight Assistant: local page-level insights for overview, suppliers, product mix, and SKU drill-down.
 
+The dashboard includes a lightweight UI language switcher for English, Simplified Chinese, and Traditional Chinese. This translates interface labels, page titles, chart titles, controls, and rule-based insight headings/templates only. It does not modify anonymized sample data values such as `Factory_001`, `SKU_000001`, `Series_001`, `Internal Design`, `External Purchase`, `In-house`, or public product category labels.
+
 ## Dashboard Preview
 
 The deployed Streamlit dashboard uses anonymized sample data only. No raw company data is included.
@@ -108,7 +111,7 @@ Current behavior:
 - returns structured sections: executive summary, key metrics, trend interpretation, top contributors, potential anomalies, suggested business actions, and data privacy note,
 - displays a future optional LLM prompt template without sending data anywhere.
 
-This design is privacy-safe and zero-budget because all insight text is produced from in-memory aggregations of `data/sample/anonymized_supply_chain_sample.csv`. No data leaves the app, no external model is called, and the assistant never receives raw Excel files, processed private parquet files, mapping tables, product image paths, or raw product descriptions.
+This design is privacy-safe and zero-budget because all insight text is produced from in-memory aggregations of `data/sample/anonymized_supply_chain_sample.csv`. No data leaves the app, no external model is called, and the assistant never receives raw Excel files, processed private parquet files, mapping tables, product image paths, or raw product descriptions. The assistant can render section headings and common insight patterns in English, Simplified Chinese, or Traditional Chinese while preserving anonymized data labels.
 
 Future versions may optionally support OpenAI API or local LLM integration, but only through local environment variables and never with committed API keys.
 

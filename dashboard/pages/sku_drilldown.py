@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from dashboard.i18n import t
 
 def _sku_monthly_summary(df: pd.DataFrame) -> pd.DataFrame:
     """Return monthly metrics for one selected SKU."""
@@ -22,16 +23,16 @@ def _sku_monthly_summary(df: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def render(df: pd.DataFrame) -> None:
+def render(df: pd.DataFrame, lang: str = "en") -> None:
     """Render the SKU drilldown page."""
-    st.title("SKU Drilldown")
+    st.title(t("sku_drilldown_title", lang))
 
     if "sku_id" not in df.columns:
-        st.warning("SKU drilldown requires a `sku_id` column.")
+        st.warning(t("sku_required_warning", lang))
         return
 
     sku_options = sorted(df["sku_id"].dropna().astype(str).unique())
-    selected_sku = st.selectbox("Select or search SKU", sku_options)
+    selected_sku = st.selectbox(t("select_sku", lang), sku_options)
     sku_df = df[df["sku_id"].astype(str) == selected_sku]
 
     st.subheader(selected_sku)
@@ -45,7 +46,7 @@ def render(df: pd.DataFrame) -> None:
 
     monthly = _sku_monthly_summary(sku_df)
     if monthly.empty:
-        st.warning("SKU trend requires a `year_month` column.")
+        st.warning(t("sku_trend_warning", lang))
         return
 
     trend = monthly.melt(
@@ -56,9 +57,9 @@ def render(df: pd.DataFrame) -> None:
     )
     trend["Metric"] = trend["Metric"].map(
         {
-            "monthly_order_qty": "Order Quantity",
-            "monthly_delivery_qty": "Delivery Quantity",
-            "monthly_delivery_labor_value": "Delivery Labor Value",
+            "monthly_order_qty": t("order_quantity", lang),
+            "monthly_delivery_qty": t("delivery_quantity", lang),
+            "monthly_delivery_labor_value": t("delivery_labor_value", lang),
         }
     )
 
@@ -69,7 +70,8 @@ def render(df: pd.DataFrame) -> None:
             y="Value",
             color="Metric",
             markers=True,
-            title="Monthly Order, Delivery, and Labor Value Trend",
+            title=t("sku_monthly_trend", lang),
+            labels={"Value": t("value", lang), "Metric": t("metric", lang)},
         ),
         width="stretch",
     )

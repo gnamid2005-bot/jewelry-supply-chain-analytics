@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from dashboard.i18n import t
 from src import metrics
 
 
@@ -21,15 +22,15 @@ def _safe_group_sum(df: pd.DataFrame, group_column: str, metric_column: str) -> 
     )
 
 
-def render(df: pd.DataFrame) -> None:
+def render(df: pd.DataFrame, lang: str = "en") -> None:
     """Render the supplier performance page."""
-    st.title("Supplier Performance")
+    st.title(t("suppliers_title", lang))
 
     top5_share = metrics.supplier_top5_share(df)
     hhi = metrics.supplier_hhi(df)
     kpi1, kpi2 = st.columns(2)
-    kpi1.metric("Supplier Top 5 Share", f"{top5_share:.1%}")
-    kpi2.metric("Supplier HHI", f"{hhi:.3f}")
+    kpi1.metric(t("supplier_top5_share", lang), f"{top5_share:.1%}")
+    kpi2.metric(t("supplier_hhi", lang), f"{hhi:.3f}")
 
     left, right = st.columns(2)
     with left:
@@ -39,7 +40,7 @@ def render(df: pd.DataFrame) -> None:
                 factory_type,
                 x="factory_type",
                 y="monthly_delivery_labor_value",
-                title="Factory Type Comparison",
+                title=t("factory_type_comparison", lang),
             ),
             width="stretch",
         )
@@ -51,7 +52,7 @@ def render(df: pd.DataFrame) -> None:
                 factory_top10,
                 x="factory",
                 y="monthly_delivery_labor_value",
-                title="Top 10 Factories by Delivery Labor Value",
+                title=t("top10_factories", lang),
             ),
             width="stretch",
         )
@@ -62,7 +63,7 @@ def render(df: pd.DataFrame) -> None:
             contribution,
             path=["factory"],
             values="monthly_delivery_labor_value",
-            title="Factory Contribution Share",
+            title=t("factory_contribution_share", lang),
         ),
         width="stretch",
     )
@@ -82,5 +83,5 @@ def render(df: pd.DataFrame) -> None:
             supplier_table["monthly_delivery_qty"] / supplier_table["monthly_order_qty"]
         ).fillna(0)
 
-    st.subheader("Sortable Supplier Table")
+    st.subheader(t("sortable_supplier_table", lang))
     st.dataframe(supplier_table, width="stretch")
