@@ -53,4 +53,13 @@ The public repository must not include:
 
 The deployed Streamlit dashboard reads only `data/sample/anonymized_supply_chain_sample.csv`. It does not read `data/raw/` or `data/processed/`.
 
-The AI Insight Assistant is a mock/local rule-based module. It uses dashboard aggregations and anomaly flags only, and it does not call paid APIs.
+The AI Insight Assistant is a local rule-based analytics module. It uses in-memory dashboard aggregations from `data/sample/anonymized_supply_chain_sample.csv` and does not call paid APIs, external LLMs, raw data, or processed private data.
+
+It currently generates structured insights for:
+
+- Executive Overview,
+- Supplier Performance,
+- Product Mix,
+- SKU Drill-down.
+
+The assistant is privacy-safe and zero-budget because it works only with anonymized sample-data summaries. It does not expose real supplier names, real SKU identifiers, raw product descriptions, product image paths, internal labels, or mapping tables.

@@ -8,7 +8,7 @@ Independent student portfolio project inspired by internship experience in jewel
 - GitHub repository: privacy-safe portfolio project for data cleaning, KPI analysis, Streamlit dashboarding, and local rule-based insight generation.
 - Demo data: `data/sample/anonymized_supply_chain_sample.csv`.
 - Raw company data is never uploaded to GitHub or Streamlit Cloud.
-- AI Insight Assistant is currently a mock/local rule-based module and does not call paid APIs.
+- AI Insight Assistant is a local rule-based analytics module and does not call paid APIs.
 
 ## Project Status
 
@@ -68,7 +68,7 @@ The Streamlit app reads only `data/sample/anonymized_supply_chain_sample.csv`.
 - Supplier Performance: factory type comparison, top factories, contribution share, supplier top 5 share, HHI, sortable supplier table.
 - Product Mix: product category contribution, product series contribution, SKU source distribution, average labor value per unit by category.
 - SKU Drilldown: searchable SKU selection, monthly order/delivery/labor value trend, related factory and product attributes.
-- AI Insight Assistant: local narrative insights generated from selected chart data and rule-based anomaly flags.
+- AI Insight Assistant: local page-level insights for overview, suppliers, product mix, and SKU drill-down.
 
 ## Dashboard Preview
 
@@ -94,7 +94,7 @@ The deployed Streamlit dashboard uses anonymized sample data only. No raw compan
 
 ![AI Insight Assistant](assets/ai_insight_assistant.png)
 
-The AI Insight Assistant is currently implemented as a mock/local rule-based module and does not call any paid API.
+The AI Insight Assistant is implemented as a local rule-based analytics module and does not call any paid API.
 
 ## AI Insight Assistant
 
@@ -102,10 +102,13 @@ The AI Insight Assistant is designed as a zero-budget portfolio feature. It does
 
 Current behavior:
 
-- reads selected dashboard context and aggregated chart data,
-- runs local anomaly rules for fulfillment rate, labor value changes, and supplier concentration,
-- returns structured insight sections: main trend, anomalies, possible business meaning, follow-up dimensions, and executive summary,
-- displays a future LLM prompt template without sending data anywhere.
+- generates page-level insights for Executive Overview, Supplier Performance, Product Mix, and SKU Drill-down,
+- supports concise, detailed, and action-oriented output styles,
+- runs local rules for fulfillment, delivery gap, supplier concentration, category mix, source mix, and SKU volatility,
+- returns structured sections: executive summary, key metrics, trend interpretation, top contributors, potential anomalies, suggested business actions, and data privacy note,
+- displays a future optional LLM prompt template without sending data anywhere.
+
+This design is privacy-safe and zero-budget because all insight text is produced from in-memory aggregations of `data/sample/anonymized_supply_chain_sample.csv`. No data leaves the app, no external model is called, and the assistant never receives raw Excel files, processed private parquet files, mapping tables, product image paths, or raw product descriptions.
 
 Future versions may optionally support OpenAI API or local LLM integration, but only through local environment variables and never with committed API keys.
 
